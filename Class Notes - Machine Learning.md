@@ -10,23 +10,23 @@
     > * T = the task of playing checkers
     > * P = the probability that the program will win the next game
 2. Supervised/Unsupervised Learning
-    * Supervised $→$ inputs and outputs are known in advanced
-    * Unsupervised $→$ only inputs are known and dividing them into clusters is wanted, and there is no feedback based on the prediction results
+    * Supervised $\to$ inputs and outputs are known in advanced
+    * Unsupervised $\to$ only inputs are known and dividing them into clusters is wanted, and there is no feedback based on the prediction results
 3. Regression/Clasification Problem
-    * Regression $→$ predict results within a continuous output
-    * Classification $→$ predict results in a discrete output, mapping input variables into categories
+    * Regression $\to$ predict results within a continuous output
+    * Classification $\to$ predict results in a discrete output, mapping input variables into categories
 
 ## Model and Cost Function
 1. Linear Regression
-    * Univariate Linear Regression $→$ only one independent variable
-2. Training set $→$ list of m training examples $(x_{(i)}, y_{(i)})$ where $i=1,\dots,m$
-3. The goal is to learn a function h: $X → Y$ so that $h_{(x)}$ is a “good” predictor for the corresponding value of y. For historical reasons, this function h is called a hypothesis.
-4. The cost function $J_{(θ)}$ depends on the parameter $θ$ of $h_{(x, θ)}$, so the goal is to find which $θ$ makes $J$ minimum, and so making the error of prediction minimum.
+    * Univariate Linear Regression $\to$ only one independent variable
+2. Training set $\to$ list of m training examples $(x_{(i)}, y_{(i)})$ where $i=1,\dots,m$
+3. The goal is to learn a function h: $X \to Y$ so that $h_{(x)}$ is a “good” predictor for the corresponding value of y. For historical reasons, this function h is called a hypothesis.
+4. The cost function $J_{(\theta)}$ depends on the parameter $\theta$ of $h_{(x, \theta)}$, so the goal is to find which $\theta$ makes $J$ minimum, and so making the error of prediction minimum.
 
 ## Parameter Learning
 1. The params are updated all at the same time.
 2. Gradient Descent algorithm is based on updating parameters until convergence:  
-    $θ_j := θ_j − α \dfrac{∂J_{(θ_0, θ_1)}}{∂θ_j}$
+    $\theta_j := \theta_j − α \dfrac{\partial J_{(\theta_0, \theta_1)}}{\partial \theta_j}$
 
 
 ---
@@ -37,14 +37,14 @@
     * $x^{(i)}$ = the input (features) of the ith training example
     * $m$ = the number of training examples
     * $n$ = the number of features
-    * Regressor: $h_{θ(x)} = θ_0 x_0 + θ_1 x_1 + θ_2 x_2 + θ_3 x_3 + ⋯ + θ_n x_n$ where $x_0=1$ (for matrix operations convenience as it represents the bias)
+    * Regressor: $h_{\theta(x)} = \theta_0 x_0 + \theta_1 x_1 + \theta_2 x_2 + \theta_3 x_3 + ⋯ + \theta_n x_n$ where $x_0=1$ (for matrix operations convenience as it represents the bias)
 1. Gradient Descent For Multiple Variables
     * Update parameters until convergence:  
-    $\theta_j := \theta_j - \alpha \frac{1}{m} \sum\limits_{i=1}^{m} (h_\theta(x^{(i)}) - y^{(i)}) \cdot x_j^{(i)} \quad$ for $j := 0, \dots, n$
+    $\displaystyle \theta_j := \theta_j - \alpha \frac{1}{m} \sum\limits_{i=1}^{m} (h_\theta(x^{(i)}) - y^{(i)}) \cdot x_j^{(i)} \quad$ for $j := 0, \dots, n$
 2. Feature Scaling and Mean Normalization
     * To avoid inefficient oscillation down to the optimum when the variables are very uneven, modify the ranges of our input variables so that they are all roughly the same:  
     $x_i:=​ \dfrac{x_i​−μ_i}{s_i}​​$  
-    $\dots$ where $μ_i$ is the average of all the values for feature $(i)$ and $s_i$​ may be the range of values $(max - min)$, or the standard deviation as well.
+    $\dots$ where $μ_i$ is the average of all the values for feature $i$, and $s_i$​ may be the range of values $(max - min)$, or the standard deviation as well.
 3. Gradient Descent in Practice II - Learning Rate
     * Not too large (may not converge), not too small (may take too long to converge)
 4. Features and Polynomial Regression
@@ -52,8 +52,8 @@
 
 ## Computing Parameters Analytically
 1. Normal Equation
-    * In this method, minimize J by explicitly taking its derivatives with respect to the $θj$’s, and setting them to zero, by using this formula:  
-    $θ=(X^T X)^{−1} X^T y$
+    * In this method, minimize $J$ by explicitly taking its derivatives with respect to the $\theta j$’s, and setting them to zero, by using this formula:  
+    $\theta=(X^T X)^{−1} X^T y$
     * Comparison table:
         | **Gradient Descent**         | **Normal Equation**                                     |
         |------------------------------|---------------------------------------------------------|
@@ -68,34 +68,34 @@
     * Use the `pinv` (pseudo-inverse matrix function) function rather than `inv`, as it gives a result even if $X^T X$ is not invertible
     * The common causes:
         * Redundant features (i.e. they are linearly dependent)
-        * Too many features (e.g. m ≤ n). If so, delete some features or use regularization
+        * Too many features (e.g. $m \leq n$). If so, delete some features or use regularization
 
 
 ---
 # Week3 - Logistic Regression
 ## Classification and Representation
 1. Classification
-    * Discrete outputs, with a finite range of possible values; usually $∈[0, 1]$
+    * Discrete outputs, with a finite range of possible values; usually $\in [0, 1]$
     * Linear regression doesn't work well because classification is not actually a linear function; it could even take values outside the possible range
 2. Hypothesis Representation
     * Binary classification so far
     * Logistic Regression works well on classification tasks
     * Let's introduce a non-linear function to constrain the possible output values:
-        * $h_θ(x) = g(θ^T x) \quad$ where:
-            * $z = θ^T x$
+        * $h_\theta(x) = g(\theta^T x) \quad$ where:
+            * $z = \theta^T x$
             * $g(z)$ is the sigmoid function or logistic function: $g(z) = \dfrac{1}{1+e^{−z}}$
     * Outputs represent estimated probabilities
 3. Decision Boundary
     * If the threshold is 0.5:
-        * $h_θ(x)≥0.5 → y=1$
-        * $h_θ(x)<0.5 → y=0$
+        * $h_\theta(x) \geq 0.5 \to y=1$
+        * $h_\theta(x) < 0.5 \to y=0$
     * $\dots$ then we can say:
-        * $g(z)≥0.5 \quad$ when $z≥0$
+        * $g(z) \geq 0.5 \quad$ when $z \geq 0$
     * $\dots$ so:
-        * $θ^Tx≥0 ⇒ y=1$
-        * $θ^Tx<0 ⇒ y=0$
+        * $\theta^Tx \geq 0 ⇒ y=1$
+        * $\theta^Tx < 0 ⇒ y=0$
     * The decision boundary is the line that separates the area where y = 0 and where y = 1. It is created by our hypothesis function.
-    * The input to the sigmoid function $g(z)$ doesn't need to be linear, and could be a function that describes a circle (e.g. $z=θ_0 + θ_1 x_1^2 + θ_2 x_2^2$) or any shape to fit our data.
+    * The input to the sigmoid function $g(z)$ doesn't need to be linear, and could be a function that describes a circle (e.g. $z=\theta_0 + \theta_1 x_1^2 + \theta_2 x_2^2$) or any shape to fit our data.
 ## Logistic Regression Model
 1. Cost Function
     * We cannot use the same cost function (mse) because the Logistic Function will cause the output to be wavy, causing many local optima. In other words, it will not be a convex function.
@@ -107,20 +107,20 @@
         * if $h_\theta(x)=y \quad ⇒ \quad \mathrm{Cost}(h_\theta(x),y) = 0$
         * if $y=0 \land h_\theta(x) \to 1 \quad ⇒ \quad \mathrm{Cost}(h_\theta(x),y) \to \infty$ 
         * if $y=1 \land h_\theta(x) \to 0 \quad ⇒ \quad \mathrm{Cost}(h_\theta(x),y) \to \infty$
-        * This way $J(θ)$ convexity is guaranteed
+        * This way $J(\theta)$ convexity is guaranteed
 2. Simplified Cost Function and Gradient Descent
     * Cost function into a single form, without conditional cases:
         * $\mathrm{Cost}(h_\theta(x),y) = - y \log(h_\theta(x)) - (1 - y) \log(1 - h_\theta(x))$
     * From gradient descent:
         * $\theta_j := \theta_j - \alpha \dfrac{\partial}{\partial \theta_j}J(\theta)$
     * $\dots$ leads to:
-        * $\theta_j := \theta_j - \frac{\alpha}{m} \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)}) x_j^{(i)}$
+        * $\displaystyle \theta_j := \theta_j - \frac{\alpha}{m} \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)}) x_j^{(i)}$
     * Notice that this algorithm is identical to the one we used in linear regression
-    * We still have to simultaneously update all values in theta
+    * We still have to simultaneously update all values in $\theta$
     * A vectorized implementation is:
         * $\theta := \theta - \frac{\alpha}{m} X^{T} (g(X \theta ) - \vec{y})$
 3. Advanced Optimization
-    * "Conjugate gradient", "BFGS", and "L-BFGS" are more sophisticated, faster ways to optimize θ that can be used instead of gradient descent (e.g. they don't need the learning rate)
+    * "Conjugate gradient", "BFGS", and "L-BFGS" are more sophisticated, faster ways to optimize $\theta$ that can be used instead of gradient descent (e.g. they don't need the learning rate)
     * Octave provides them (there are implementation details)
 ## Multiclass Classification
 1. One-vs-all (or One-vs-rest)
@@ -191,9 +191,9 @@
 ## Neural Networks
 1. Model Representation I
     * Model from brain
-        * Dendrite $→$ inputs wire
-        * Axion $→$ output wire
-        * Nuclues $→$ computation core
+        * Dendrite $\to$ inputs wire
+        * Axion $\to$ output wire
+        * Nuclues $\to$ computation core
     * Naming convention
         * $x_0$​ input node is called the `bias unit`, and is always equal to $1$
         * The `input layer`  is the first layer, `layer 1`
@@ -210,9 +210,9 @@
         * $\dots$ then $\Theta^{(j)}$ will be of dimension $(s_{j+1}) \times ((s_j) + 1)$
 ## Applications
 1. Examples and Intuitions I
-    * Combinations with logical gates $→$ `AND`, `OR`, `NOT`, `XNOR`
+    * Combinations with logical gates $\to$ `AND`, `OR`, `NOT`, `XNOR`
 2. Examples and Intuitions II
-    * LeNet5 $→$ classify handwritten numbers for zip codes
+    * LeNet5 $\to$ classify handwritten numbers for zip codes
 3. Multiclass Classification
     * There is $1$ `unit` in the `output layer` per `class`
     * `One Hot Encoding` is used for the ground truth $y$
@@ -262,7 +262,7 @@
         ```
     * Once you have verified that your backprop is correct, turn it off, as the code to compute gradApprox can be very slow.
 3. Random Initialization
-    * When we backpropagate, all nodes will update to the same value repeatedly $→$ all neurons learning the same feature $→$ redundant information.
+    * When we backpropagate, all nodes will update to the same value repeatedly $\to$ all neurons learning the same feature $\to$ redundant information.
     * Instead, randomly initialize the weights (e.g. uniform distribution $\in [-\epsilon,\epsilon]$: `Theta1 = rand(10,11) * 2*INIT_EPSILON - INIT_EPSILON;`)
 4. Putting It Together
     * Define architecture of the NN:
